@@ -1,0 +1,198 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link REL="SHORTCUT ICON" href="favicon.ico">
+<title>FAQ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="description" content="Sudoku generator FAQ" />
+<meta name="keywords" content="Sudoku generator FAQ" />
+</head>
+<body>
+<h1>FAQ</h1>
+<ul>
+<li><a href="#1">How does the program work?</a>
+<li><a href="#2">How is the level of difficulty defined?</a>
+<li><a href="#3">Symmetry, what is this?</a>
+<li><a href="#4">How do I type in a puzzle?</a>
+<li><a href="#5">How fast is the program to generate a puzzle?</a>
+<li><a href="#6">How are the puzzles on the home page made?</a>
+<li><a href="#7">What is GPL?</a>
+<li><a href="#8">How do I get help to a puzzle on the home page?</a>
+<li><a href="#9">Why does it only return 14 puzzles when I've asked for 20?</a>
+<li><a href="#10">Will new puzzles be added to the home page?</a>
+<li><a href="#11">Why is the home page so slow?</a>
+<li><a href="#12">How do I compile the program myself on a Windows machine?</a>
+</ul>
+<a name="1">
+<h2>How does the program work?</h2>
+<p>The core of the program is a fast puzzle solver.
+The solver starts by generating a list of possible
+candidates for each empty cell. The solving starts by
+filling the cells with a single candidate. For cells with
+more than one candidate, each candidate is tested at a time.
+This is coded using a simple, recursive algorithm.</p>
+<p>Sudoku puzzles are generated starting with an empty
+board. This "puzzle" is then solved. A special version
+of the algorithm is used: The list of candidates for a cell
+is permuted before each possibility is tested. This produces
+random puzzles.</p>
+<p>The numbers are now removed one by one. If the puzzle
+does not have a single solution the number is inserted again.
+The numbers are removed in a random order, taking the
+desired symmetry into account.</p>
+<p>When no more numbers can be removed, a special version
+of the solver is run. This uses additional algorithms.
+This solver is slower, but is used to classify the difficulty
+of the puzzle.</p>
+<a name="2">
+<h2>How is the level of difficulty defined?</h2>
+<p>A Sudoku puzzle is normally solved like this:</p>
+<p>Make a list of possible candidates for each empty cell.</p>
+<p>If a cell has one candidate only, choose this, and
+update the list of possible candidates for the other cells.</p>
+<p>If the algorithm keeps finding cells with a single candidate,
+classify the puzzle as <b>Very easy</b>.</p>
+<p>If a cell with a single candidate doesn't exist, the program
+looks for rows, columns, or boxes where a number can only be
+in a single cell. Puzzles solvable using this and the first
+algorithm are classified as <b>Easy</b>.</p>
+<p>The program looks for rows or columns, where the candidates for
+a number all lies within a box. The number is then eliminated
+from other cells in this box outside the row or column. Puzzles
+of this type are classified as <b>Medium</b>.</p>
+<p>The program looks for subsets of n numbers, occupying n
+cells. Other candidates for these n numbers can the be eliminated
+from the row, column, or box. E.g., if two cells on a row
+both have the candidates 4 and 7, one cell must be 4, and
+the other 7 (or vice versa). The numbers 4 and 7 can then be
+eliminated from the other cells on the row. Puzzles of this
+type are classified as <b>Hard</b>.</p>
+<p>Puzzles that can't be solved using these algorithms are
+classified as <b>Difficult</b>. This can be solved by guessing
+on one of the candidates and continue the solving. If the
+solving process reaches a dead end, it goes back and select
+the next candidate for the cell.</p>
+<p>More algorithms are available, but these havn't been
+added to this program (yet). The algorithm used for the
+<b>Hard</b>-classification is a bit tricky, as it requires
+a big lookup-table. This is the reason why I havn't made any
+5x6 puzzles of this level.</p>
+<a name="3">
+<h2>Symmetry, what is this?</h2>
+<p>Sudoku puzzles look nicest, if they are symmetrical.</p>
+<p>The program uses three kinds of symmetry: None,
+mirroring in the x and y axes, and 180° rotation.</p>
+<p>Puzzles created without symmetry are created without
+taking symmetry into account, so by chance, they could
+turn out being symmetrical!</p>
+<p>Symmetrical puzzles are faster to produce, as more than
+one number are removed at a time.</p>
+<p>Symmetrical puzzles can contain extra numbers, i.e. numbers
+that can be removed, and the puzzle still has only one
+solution.</p>
+<a name="4">
+<h2>How do I type in a puzzle?</h2>
+<p>In short - you don't! But there is a trick:</p>
+<p>Start a text editor (e.g. notepad in windows) and
+type in the puzzle. Empty cells are written as 0 (zero).
+A puzzle could look like this:</p>
+<pre>
+000650
+003000
+500000
+000002
+000300
+012000
+</pre>
+<p>Copy the numbers with the mouse, and select <b>Paste</b> then the Sudoku program.
+Prior to this, the size of the puzzle should be selected, in this case 2x3.</p>
+<a name="5">
+<h2>How fast is the program to generate a puzzle?</h2>
+<p>The program produces approx. 540 3x3 Sudoku puzzles (x/y mirror symmetrical) per second
+on a 3.6 GHz Xeon machine.</p>
+<p>Larger puzzles can take much longer to produce, several minutes.
+I've added a limit on how many times the recursive solver may
+be called (p.t. 100000 times), this cuts down on the run time.</p>
+<a name="6">
+<h2>How are the puzzles on the home page made?</h2>
+<p>If you download the source code (the .zip or .tar.gz files),
+and compile the program, a batch version of the program is created as
+well as the normal interactive.</p>
+<p>The batch version produces puzzles of the requested size and symmetry.
+The puzzles are written out on the console in a format suitable for
+reading into <a href="http://www.mysql.com">MySQL database</a>.
+Scripts on the home page query this database and present the
+puzzles as HTML or PDF.</p>
+<p>The source code for these scripts are included in the .tar.gz and
+.zip files.</p>
+<a name="7">
+<h2>What is GPL?</h2>
+<p>The license for the program and the scripts on the homepage
+is GPL, described <a href="http://www.gnu.org/copyleft/gpl.html">here</a>.</p>
+<p>In short, this license means that you can do almost everything with the
+source code, as long as you make your new source code publicly available, e.g.
+on a home page. You should explain in the source code what you have done
+to it, and you can't change the license.</p>
+<p>Puzzles produced by the program may freely be distributed, with a reference
+to this home page.</p>
+<a name="8">
+<h2>How do I get help to a puzzle on the home page?</h2>
+<p>If you're stuck with a puzzle, you can use this trick to
+get a hint:</p>
+<p>Click on <b>Show solution</b>, and on that page you click on
+<b>Show explanation</b>. The solution is now shown together with the
+steps necessary to solve the puzzle.</p>
+<p>If you're stuck with a puzzle that you have printed out, you can
+find the puzzle on the home page by entering its number on
+<a href="sudoku.php">this page</a>.
+<a name="9">
+<h2>Why does it only return 14 puzzles when I've asked for 20?</h2>
+<p>If you ask for 20 puzzles on the <a href="pdf.php">PDF page</a>,
+and only 14 are returned, it is because the database only contains
+14 puzzles of the requested type. Try to extend the search with different
+types of symmetry.</p>
+<a name="10">
+<h2>Will new puzzles be added to the home page?</h2>
+<p>Yes, every night new 2x3 and 3x3 puzzles are added.</p>
+<p>Larger puzzles are produced "sometimes".</p>
+<p>Every time a puzzle is display, the date and time is registered
+in the database. Puzzles, that havn't been shown, are displayed first.</p>
+<p>Please note that if you ask for rare puzzles, puzzles that have
+been shown previously will be displayed again.</p>
+<a name="11">
+<h2>Why is the home page so slow?</h2>
+<p>The server runs on a 512 Kbit ADSL connection.</p>
+<p>The database contains millions of puzzles, so it can
+take some time to fetch the information, especially with several concurrent users.</p>
+<p>More than 10000 have fetched this program, so there is a great interest in Sudoku!</p>
+<a name="12">
+<h2>How do I compile the program myself on a Windows machine?</h2>
+<p>I use the MinGW compiler for compiling under Windows.</p>
+<p>Get and execute the file MinGW-3.1.0-1.exe from
+<a href="http://www.mingw.org/download.shtml">http://www.mingw.org/download.shtml</a>.
+The file is located a little more than halfway down the page.</p>
+
+<p>This is not the latest version, but it is the easiest 
+to install.</p>
+
+<p>Rename mingw32-make.exe to make.exe in the c:\mingw\bin
+folder.</p>
+
+<p>Add c:\mingw\bin to the path. On an English Windows 2000 this is done 
+by right-clicking on "My Computer", select Properties,
+Advanced, Environment Variables, System variables, select PATH,
+edit and append ";c:\mingw\bin".</p>
+
+<p>Unzip the source code zip file, open a command prompt, cd to the
+unzipped files, and write the command:</p>
+
+<p>make windows</p>
+
+<p>This will generate sudoku.exe and the batch version of the program,
+bsudoku.exe</p>
+
+<p><hr></p>
+<p></p>
+<p>Mogens Kjær, <a href="mailto:mk@lemo.dk">mk@lemo.dk</a></p>
+</body>
+</html>
