@@ -1,0 +1,212 @@
+@c -*- Mode: Texinfo; coding: latin-1; -*-
+@ifinfo
+@definfoenclose code,�,�
+
+@macro metavar {arg}
+�\arg\�
+@end macro
+
+@macro cubed {}
+�
+@end macro
+
+@macro result {}
+@r{�}
+@end macro
+
+@macro OUT {}
+�
+@end macro
+
+@macro EQ {}
+�
+@end macro
+
+@macro CRLF {}
+�
+@end macro
+
+@macro uumlaut {}
+�
+@end macro
+
+@macro down {arg}
+@t{�}\arg\
+@end macro
+
+@macro prevplus {}
+�
+@end macro
+
+@macro begininterleave {}
+�
+@end macro
+
+@macro extrainterleave {}
+@begininterleave{}
+@end macro
+
+@macro endinterleave {}
+�
+@end macro
+
+@macro ssso {}
+@sub1{}
+@end macro
+
+@macro ssst {}
+@sub2{}
+@end macro
+
+@macro ssse {}
+@sub8{}
+@end macro
+
+@macro ssss {}
+@sub1{}@sub6{}
+@end macro
+
+@macro neq {}
+�
+@end macro
+
+@macro in {}
+�
+@end macro
+
+@macro geq {}
+�
+@end macro
+
+@macro bigcup {}
+�
+@end macro
+
+@macro leq {}
+�
+@end macro
+
+@macro langle {}
+�
+@end macro
+
+@macro rangle {}
+�
+@end macro
+
+@macro downarrow {}
+�
+@end macro
+
+@macro Partial {}
+�
+@end macro
+
+@macro pi {}
+�
+@end macro
+
+@macro epsilon {}
+�
+@end macro
+
+@macro alfa {}
+�
+@end macro
+
+@macro cdot {}
+�
+@end macro
+
+@macro centerdot {}
+@cdot{}
+@end macro
+
+@macro Stress {arg}
+�\arg\
+@end macro
+
+@macro stress {arg}
+�\arg\
+@end macro
+
+@macro schwa {}
+�
+@end macro
+
+@macro harda {}
+�
+@end macro
+
+@macro harde {}
+�
+@end macro
+
+@macro hardo {arg}
+�
+@end macro
+
+@macro maybeStress {arg}
+�\arg\
+@end macro
+
+@macro one {arg}
+\arg\�
+@end macro
+
+@rmacro subs {arg}
+_@{\arg\@}
+@end rmacro
+
+@macro subs1 {arg}
+_\arg\
+@end macro
+
+@macro sub0 {}
+�
+@end macro
+
+@macro sub1 {}
+�
+@end macro
+
+@macro sub2 {}
+�
+@end macro
+
+@macro sub3 {}
+�
+@end macro
+
+@macro sub4 {}
+�
+@end macro
+
+@macro sub5 {}
+�
+@end macro
+
+@macro sub6 {}
+�
+@end macro
+
+@macro sub7 {}
+�
+@end macro
+
+@macro sub8 {}
+�
+@end macro
+
+@macro sub9 {}
+�
+@end macro
+
+@macro subOne {}
+@sub1{}
+@end macro
+
+@macro le {}
+�
+@end macro
+@end ifinfo
