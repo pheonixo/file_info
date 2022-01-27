@@ -37,4 +37,5 @@ and patched gtksourceview languages from 5.3.2 to work with 3.0.
 mime-icons directory contains icons, currently 128, 16px sizes, to cover every text mime type,  
 except rtf, lci_file_info() can return.
   
-  The additional files are examples of use.
+The example files are intended to show use, integration. They require Gtk and gtksourceview 3.0.
+Since was designed on Ubuntu 18, I believe its Gtk 3.22.
