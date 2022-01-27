@@ -4,7 +4,7 @@
 #include <dirent.h>
 #include <gtksourceview/gtksource.h>
 
-#include "lci_mp.h"
+#include "../lci_mp.h"
 extern int lci_file_info(LCITextPort *tp, char *filename);
 
 
@@ -150,7 +150,7 @@ main(void) {
   int status;
   LCITextPort tp = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0 };
   memset(outdata, 0, sizeof(outdata));
-  char dirname[128] = { "/home/steven/Development/Projects/LCode/mime_parser/test_files/" };
+  char dirname[128] = { "../test_files/" };
   size_t dlen = strlen(dirname);
   DIR *dirp = opendir(dirname);
   struct dirent *ent;
