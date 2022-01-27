@@ -1,5 +1,5 @@
 //open all in test_files outside LCode, dont load into app/viewport, just a buffer
-#include "../lci.h"
+#include "../lci_mp.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,8 +9,8 @@
 
 //gcc `pkg-config --cflags gtk+-3.0` -I/usr/include/gtksourceview-3.0 -o tall run_all_test_files.c lci_file_info.c `pkg-config --libs gtk+-3.0` -lgtksourceview-3.0 -L.. -lpfile
 
-static char iPath[256] = { "/home/steven/Pictures/text128_icons/text-x-" };
-static int  iAppend = 43;  // strlen(iPath)
+static char iPath[1024];
+static int  iAppend;
 static int odx = 0;
 
 /* needed to set text, must be utf-8, in libpfile.a due to conflicts with gtk */
@@ -80,19 +80,28 @@ puts("ERROR: file didn't open");
     free(buffer);
   }
     // icon check
-    char *req_lang = strrchr(tp->mime_type, '.');
-    if (req_lang == NULL)
-      req_lang = strrchr(tp->mime_type, '/');
-    if (req_lang != NULL) {
-      strcpy(&iPath[iAppend], (req_lang + 1));
-      strcat(iPath, ".svg");
-      struct stat buf;
-      if (stat(iPath, &buf) != 0)
-        if (strcmp((req_lang + 1), "rtf") != 0)
+  char *req_lang = strrchr(tp->mime_type, '.');
+  if (req_lang == NULL)
+    req_lang = strrchr(tp->mime_type, '/');
+  if (req_lang != NULL) {
+    static char  iconA[64] = { "/text128_icons/text-x-" };
+    static char  iconB[64] = { "/text16_icons/text-x-" };
+    strcpy(&iconA[22], (req_lang + 1));
+    strcpy(&iconB[21], (req_lang + 1));
+    strcpy(&iPath[iAppend], iconA);
+    strcat(iPath, ".svg");
+    struct stat buf;
+    if (stat(iPath, &buf) != 0)
+      if (strcmp((req_lang + 1), "rtf") != 0)
 printf("missing icon (%s) for (%s)\n", iPath, tp->filename);
-    } else {
+    strcpy(&iPath[iAppend], iconB);
+    strcat(iPath, ".svg");
+    if (stat(iPath, &buf) != 0)
+      if (strcmp((req_lang + 1), "rtf") != 0)
+printf("missing icon (%s) for (%s)\n", iPath, tp->filename);
+  } else {
 printf("NULL icon () for (%s) file: (%s)\n", tp->mime_type, tp->filename);
-    }
+  }
     // create new view
   return tp;
 
@@ -112,9 +121,14 @@ int
 main(void) {
 
   int status;
-  char dirname[128] = { "/home/steven/Development/Projects/LCode/mime_parser/test_files/" };
+
+  realpath("../mime-icons/", iPath);
+  iAppend = strlen(iPath); // = { "../mime-icons/text128_icons/text-x-" }
+
+  char dirname[128] = { "../test_files/" };
   size_t dlen = strlen(dirname);
   DIR *dirp = opendir(dirname);
+  if (dirp == NULL)  return 0;
   struct dirent *ent;
     /* walk each entry of root directory */
   while ((ent = readdir(dirp)) != NULL) {
